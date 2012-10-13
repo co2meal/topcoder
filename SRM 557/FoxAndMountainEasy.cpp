@@ -1,40 +1,56 @@
 #include <cstdio>
 #include <cmath>
-#include <cstring>
+#include <typeinfo>
+#include <cstdlib>
+#include <ctime>
 #include <iostream>
 #include <algorithm>
-#include <set>
 #include <vector>
+#include <queue>
+#include <set>
+#include <cstring>
 #include <sstream>
-#include <typeinfo>
-#include <ctime>
+#include <cassert>
+#include <map>
+#include <stack>
+
+
+#define FOR(I,A,B) for(int I=(A);I<(B);I++)
+#define REP(I,N) FOR(I,0,N)
+#define ALL(A) (A).begin(),(A).end()
+
+#define SQR(x) ((x)*(x))
+#define PB(x) push_back(x)
+
+#define PI (acos(-1.0))
 
 using namespace std;
+
+typedef vector<int> VI;
+typedef vector< vector<int> > VVI;
 
 class FoxAndMountainEasy {
     public:
     string possible(int n, int h0, int hn, string history) {
-        int need= 0;
+        int prepend = 0;
         int delta = 0;
-        for (int i = 0; i < history.size(); ++i)
-        {
-            if (history[i] == 'D') delta --;
-            else delta ++;
-
-            if (h0 + delta < 0)
-                need = max(need, -h0-delta);
+        REP (i, history.size()) {
+            if (history[i] == 'U') delta ++;
+            else delta --;
+            prepend = min(prepend, h0 + delta);
         }
 
-        int count = n - (need + history.size());
-        int remain = (hn - h0) - (need + delta);
+        prepend *= -1;
 
-        if (count < 0) return "NO";
+        int remainx = n - prepend - history.size();
+        int remainy = hn - (h0 + prepend + delta);
 
+        cout << remainx << " , " << remainy << endl;
 
-        if (count >= abs(remain) && (count - remain) % 2 == 0) return "YES";
-        else return "NO";
-
-        return "";
+        if (remainx < 0) return "NO";
+        if (abs(remainx) < abs(remainy)) return "NO";
+        if (remainx % 2 != abs(remainy) % 2) return "NO";
+        return "YES";
     }
 };
 
@@ -123,8 +139,17 @@ bool run_testcase(int no) {
             return do_test(n, h0, hn, history, expected, no);
         }
 
+        case 7: {
+            int n = 25;
+            int h0 = 190;
+            int hn = 165;
+            string history = "DUUUDUUUDDUUUUUDD";
+            string expected = "NO";
+            return do_test(n, h0, hn, history, expected, no);
+        }
+
         // Your custom testcase goes here
-        case 7:
+        case 8:
             break;
         default: break;
     }
@@ -138,12 +163,12 @@ int main(int argc, char *argv[]) {
 
     int nPassed = 0, nAll = 0;
     if (argc == 1)
-        for (int i = 0; i < 7; ++i) nAll++, nPassed += run_testcase(i);
+        for (int i = 0; i < 8; ++i) nAll++, nPassed += run_testcase(i);
     else
         for (int i = 1; i < argc; ++i) nAll++, nPassed += run_testcase(atoi(argv[i]));
     cout << endl << "Passed : " << nPassed << "/" << nAll << " cases" << endl;
 
-    int T = time(NULL) - 1349881824;
+    int T = time(NULL) - 1350118300;
     double PT = T / 60.0, TT = 75.0;
     cout << "Time   : " << T / 60 << " minutes " << T % 60 << " secs" << endl;
     cout << "Score  : " << 250 * (0.3 + (0.7 * TT * TT) / (10.0 * PT * PT + TT * TT)) << " points" << endl;

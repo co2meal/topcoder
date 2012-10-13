@@ -1,15 +1,33 @@
 #include <cstdio>
 #include <cmath>
-#include <cstring>
+#include <typeinfo>
+#include <cstdlib>
+#include <ctime>
 #include <iostream>
 #include <algorithm>
-#include <set>
 #include <vector>
+#include <queue>
+#include <set>
+#include <cstring>
 #include <sstream>
-#include <typeinfo>
-#include <ctime>
+#include <cassert>
+#include <map>
+#include <stack>
+
+
+#define FOR(I,A,B) for(int I=(A);I<(B);I++)
+#define REP(I,N) FOR(I,0,N)
+#define ALL(A) (A).begin(),(A).end()
+
+#define SQR(x) ((x)*(x))
+#define PB(x) push_back(x)
+
+#define PI (acos(-1.0))
 
 using namespace std;
+
+typedef vector<int> VI;
+typedef vector< vector<int> > VVI;
 
 class ${ClassName} {
     public:
